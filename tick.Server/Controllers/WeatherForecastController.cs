@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace tick.Server.Controllers
 {
@@ -13,9 +14,10 @@ namespace tick.Server.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -28,6 +30,23 @@ namespace tick.Server.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        AppDbContext _context;
+
+        [HttpGet("testdb")]
+        public IActionResult TestDatabaseConnection()
+        {
+            try
+            {
+                _context.Database.OpenConnection();
+                _context.Database.CloseConnection();
+                return Ok("Connection successful!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Connection failed: " + ex.Message);
+            }
         }
     }
 }
