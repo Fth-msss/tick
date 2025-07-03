@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tick.Server", "tick.Server\tick.Server.csproj", "{8B91C47A-C69B-47B7-81E7-F5E30E4A7DAD}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "tick.client", "tick.client\tick.client.esproj", "{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B91C47A-C69B-47B7-81E7-F5E30E4A7DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B91C47A-C69B-47B7-81E7-F5E30E4A7DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B91C47A-C69B-47B7-81E7-F5E30E4A7DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B91C47A-C69B-47B7-81E7-F5E30E4A7DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1F23F1-64C0-49EB-B9B3-D610DAC0F440}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {870100BC-F333-4172-B040-D99E5E1A4B4E}
+	EndGlobalSection
+EndGlobal

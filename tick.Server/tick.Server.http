@@ -1,0 +1,6 @@
+@tick.Server_HostAddress = http://localhost:5139
+
+GET {{tick.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
