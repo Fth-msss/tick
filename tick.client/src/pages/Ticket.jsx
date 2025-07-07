@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react"; // Hamburger icons (optional)
 
 export default function Ticket() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -13,7 +12,7 @@ export default function Ticket() {
                     onClick={() => setMenuOpen(!menuOpen)}
                     className="text-black md:hidden"
                 >
-                    {menuOpen ? <X size={24} /> : <Menu size={24} />}
+                   {/* {menuOpen ? <X size={24} /> : <Menu size={24} />}*/}
                 </button>
             </header>
 
