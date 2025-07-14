@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Home from '../pages/Home';
-import About from '../pages/About';
-import NotFound from '../pages/NotFound';
-import Ticket from '../pages/Ticket';
+import Home from './Home';
+import About from './About';
+import NotFound from './NotFound';
+import Ticket from './Ticket';
 
 import Layout from "../components/Layout";
 
