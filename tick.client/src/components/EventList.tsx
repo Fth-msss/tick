@@ -1,7 +1,4 @@
-import React, { useEffect } from "react";
-import { useNavigate, useOutlet, useOutletContext } from "react-router-dom";
-import useAuthGuard from "../hooks/authGuard";
-
+import { useOutletContext } from "react-router-dom";
 
 
 const EventList = () => {
@@ -11,11 +8,6 @@ const EventList = () => {
         getSeats,
         logOut
     } = useOutletContext();
-
-    const navigate = useNavigate();
-
-    
-    
 
     return (
         <div className="table-container">

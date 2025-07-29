@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using tick.Server.Models;
 using tick.Server.Models.views;
 
+ ///contoller that governs over the events table
 namespace tick.Server.Controllers
 {
     [ApiController]

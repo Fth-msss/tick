@@ -11,7 +11,8 @@ using System.Text;
 using tick.Server.Models;
 using tick.Server.Models.views;
 
-
+///contoller that governs over logging in/registering. 
+///also governs ticket creation and seat reservation
 namespace tick.Server.Controllers
 {
     [ApiController]
@@ -28,11 +29,6 @@ namespace tick.Server.Controllers
 
         }
 
-
-
-       
-
-
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserView dto)
         {
@@ -46,7 +42,6 @@ namespace tick.Server.Controllers
             // Create JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["Jwt:Secret"]!);
-
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] 
@@ -57,10 +52,8 @@ namespace tick.Server.Controllers
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwt = tokenHandler.WriteToken(token);
-
             return Ok(new { token = jwt });
         }
 
@@ -83,24 +76,22 @@ namespace tick.Server.Controllers
 
             return Ok("User registered.");
         }
+
         [Authorize]
         [HttpPost("reserveSeat")]
         public async Task<IActionResult> ReserveSeat([FromBody] CreateTicketView dto)
         {
-
-
-            // Step 1: Get userId from JWT claims safely
+            //check if token data matches user
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        
             if (userClaim == null || !int.TryParse(userClaim.Value, out int userId))
                 return Unauthorized("Invalid user ID, user:" + userClaim);
-
 
             //check if there is already a ticket for the seat
             var ticket = await _context.Ticket.FirstOrDefaultAsync(t => t.EventId == dto.IdEvent && t.SeatId == dto.IdSeat && t.State == "Valid");
             if (ticket != null) { return BadRequest("seat already has a valid ticket"); }
 
-            // Step 2: Query everything at once
+            //query for necessary data
+            //gets the event, the seat, and if it exists, seat lock of seat
             var eventSeatData = (
                 from ev in _context.Event
                 where ev.Id == dto.IdEvent
@@ -116,16 +107,13 @@ namespace tick.Server.Controllers
                     SeatLock = slock
                 }
             ).FirstOrDefault();
-
             if (eventSeatData == null)
                 return BadRequest("Event or seat not found");
 
-
-            // Step 3: Check if user still exists (optional but realistic)
+            // query user. 
             var user = _context.User.Find(userId);
             if (user == null)
                 return Unauthorized("User not found");
-
 
             //check if seat is locked
             if(eventSeatData.SeatLock != null && eventSeatData.SeatLock.ValidUntil > DateTime.UtcNow) 
@@ -139,7 +127,6 @@ namespace tick.Server.Controllers
                     
                 }
                 else { return BadRequest("Seat locked by another user, how did you get here?"); }
-
             }
             else if (eventSeatData.SeatLock != null && eventSeatData.SeatLock.ValidUntil <= DateTime.UtcNow)
             {
@@ -161,24 +148,22 @@ namespace tick.Server.Controllers
             return Ok("seat successfully locked");
         }
 
-        
-
         [Authorize]
         [HttpPost("createTicket")]
         public async Task<IActionResult> CreateTicket([FromBody] CreateTicketView dto)
         {
-            // Step 1: Get userId from JWT claims safely
+            // check if token has a valid user id
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
             if (userClaim == null || !int.TryParse(userClaim.Value, out int userId))
                 return Unauthorized("Invalid user ID, user:" + userClaim);
 
+            //check if user exists in database
             var user = await _context.User.FirstOrDefaultAsync(n => n.Id == userId);
             if(user == null) { return BadRequest("user not registered,somehow"); }
+
             //if ticket already exists
             var seatTaken = await _context.Ticket.AnyAsync(t => t.EventId == dto.IdEvent && t.SeatId == dto.IdSeat);
             if (seatTaken) { return BadRequest("seat is taken,somehow"); }
-
 
             //seat has to be locked by the same user
             var seatReady = await _context.Seatlock.AnyAsync(s => s.UserId == user.Id);
@@ -197,15 +182,9 @@ namespace tick.Server.Controllers
        
             SeatId = dto.IdSeat
             };
-
-           
             _context.Ticket.Add(ticket);
             await _context.SaveChangesAsync();
-
             return Ok(ticket);
         }
     }
-
-
-
 }

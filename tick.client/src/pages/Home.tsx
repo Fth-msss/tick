@@ -1,23 +1,18 @@
-import EventList from "../components/EventList";
-import LoginForm from "../components/LoginForm";
-import Payment from "../components/Payment";
-import SeatTable from "../components/SeatTable";
 import "../styles/Home.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import useAuthGuard from "../hooks/authGuard";
 
 function Home() {
     const navigate = useNavigate();
 
-    const [events, setEvents] = useState([]);
-    const [seats, setSeats] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [events, setEvents] = useState([]);//holds event list
+    const [seats, setSeats] = useState([]);//holds seat list
+    const [loading, setLoading] = useState(true);//useless. played loading animation before
     const [loggedIn, setLoggedIn] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loginError, setLoginError] = useState("");
+    const [username, setUsername] = useState("");//to use with loginform
+    const [password, setPassword] = useState("");//to use with loginform
+    const [loginError, setLoginError] = useState("");//for displaying msg
 
     const [authMode, setAuthMode] = useState("login"); // "login" or "register"
     const [selectedEvent, setSelectedEvent] = useState(null);

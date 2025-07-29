@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -11,19 +10,7 @@ const SeatTable = () => {
     } = useOutletContext();
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token || !seats || !selectedEvent || !reserveSeat) {
-            navigate("/events");
-        }
-    }, [seats, selectedEvent, reserveSeat, navigate]);
-
-    // Guard clause to prevent rendering if data is missing
-    if (!selectedEvent || !seats) {
-        return null; // or <div>Loading...</div>
-    }
-
+    if (!selectedEvent || !seats) {navigate("/events");}
     return (
         <div className="table-container">
             <h2>Seats for: {selectedEvent.name}</h2>
