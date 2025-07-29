@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
 import { env } from 'process';
+//import basicSsl from '@vitejs/plugin-basic-ssl'
 
 const baseFolder =
     env.APPDATA !== undefined && env.APPDATA !== ''
@@ -30,10 +31,9 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
     }
 }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7026';
+const target = 'http://localhost:7026';
 
-// https://vitejs.dev/config/
+// http://vitejs.dev/config/
 export default defineConfig({
     plugins: [plugin()],
     resolve: {
@@ -49,9 +49,10 @@ export default defineConfig({
             }
         },
         port: 5173,
-        https: {
-            key: fs.readFileSync(keyFilePath),
-            cert: fs.readFileSync(certFilePath),
-        }
+        //https:
+        //{
+        //    key: fs.readFileSync(keyFilePath),
+        //    cert: fs.readFileSync(certFilePath),
+        //}
     }
 })
