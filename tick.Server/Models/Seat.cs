@@ -11,7 +11,7 @@ namespace tick.Server.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("idEvent")]
+        [Column("idSeat")]
         public int Id { get; set; }
         [Required]
         public int Row { get; set; }

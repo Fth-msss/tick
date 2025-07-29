@@ -14,6 +14,7 @@ namespace tick.Server.Models
         [Column("idTicket")]
         public int Id { get; set; }
         [Required]
+        [Column("OwnerName")]
         public string Owner { get; set; } = null!;
         [Required]
         public DateTime CreatedAt { get; set; }
