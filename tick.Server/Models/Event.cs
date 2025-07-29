@@ -23,6 +23,5 @@ namespace tick.Server.Models
         [Column("idPhysicalSeatLayout")]
         public int PhysicalLayoutId { get; set; }
         public PhysicalLayout PhysicalLayout { get; set; } =null!;
-
     }
 }

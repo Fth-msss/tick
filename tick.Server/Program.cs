@@ -6,7 +6,9 @@ using System.Text;
 using tick.Server;
 
 var builder = WebApplication.CreateBuilder(args);
-var key = Encoding.ASCII.GetBytes("thejwtkeythatsbetteroffbeingrandom");
+//get this key from appsettings instead of hard writing it here what are you doing
+var config = builder.Configuration;
+var key = Encoding.ASCII.GetBytes(config["Jwt:Secret"]);
 
 //add auth for login
 builder.Services.AddAuthentication(options =>
@@ -31,7 +33,9 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -53,9 +57,11 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
 app.UseCors("AllowFrontend");
 
 app.UseDefaultFiles();
+
 app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.

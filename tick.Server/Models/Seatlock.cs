@@ -26,7 +26,6 @@ namespace tick.Server.Models
         [Required]
         [Column("idSeat")]
         public int SeatId { get; set; }
-
         public Event Event { get; set; } = null!;
         public Seat Seat { get; set; } = null!;
     }
